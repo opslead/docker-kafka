@@ -30,7 +30,6 @@ RUN apt-get update && \
     apt-get clean
 
 COPY entrypoint /opt/kafka
-COPY logback.xml /opt/kafka
 RUN chmod +x /opt/kafka/entrypoint
 
 USER $KAFKA_USER
