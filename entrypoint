@@ -51,16 +51,7 @@ echo "transaction.state.log.min.isr=$KAFKA_TRANSACTION_STATE_LOG_MIN_ISR" >> /op
 # The maximum amount of time a message can sit in a log before we force a flush
 #log.flush.interval.ms=1000
 
-############################# Log Retention Policy #############################
-
-# The following configurations control the disposal of log segments. The policy can
-# be set to delete segments after a period of time, or after a given size has accumulated.
-# A segment will be deleted whenever *either* of these criteria are met. Deletion always happens
-# from the end of the log.
-
-# The minimum age of a log file to be eligible for deletion due to age
 echo "log.retention.hours=$KAFKA_LOG_RETENTION_HOURS" >> /opt/kafka/config/server.properties
-
 
 # A size-based retention policy for logs. Segments are pruned from the log unless the remaining
 # segments drop below log.retention.bytes. Functions independently of log.retention.hours.
@@ -69,21 +60,10 @@ echo "log.retention.hours=$KAFKA_LOG_RETENTION_HOURS" >> /opt/kafka/config/serve
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
 #log.segment.bytes=1073741824
 
-# The interval at which log segments are checked to see if they can be deleted according
-# to the retention policies
 echo "log.retention.check.interval.ms=$KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS" >> /opt/kafka/config/server.properties
-
-
 echo "zookeeper.connect=$KAFKA_ZOOKEEPER_CONNECT" >> /opt/kafka/config/server.properties
 echo "zookeeper.connection.timeout.ms=$KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS" >> /opt/kafka/config/server.properties
-
-# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
-# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
-# The default value for this is 3 seconds.
-# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
-# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
 echo "group.initial.rebalance.delay.ms=$KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS" >> /opt/kafka/config/server.properties
-
 
 exec java -server ${JAVA_ARGS} \
     -Dcom.sun.management.jmxremote \
