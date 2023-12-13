@@ -1,20 +1,8 @@
 #!/bin/bash
 
 echo "broker.id=$KAFKA_BROKER_ID" >> /opt/kafka/config/server.properties
-
-############################# Socket Server Settings #############################
-
-# The address the socket server listens on. If not configured, the host name will be equal to the value of
-# java.net.InetAddress.getCanonicalHostName(), with PLAINTEXT listener name, and port 9092.
-#   FORMAT:
-#     listeners = listener_name://host_name:port
-#   EXAMPLE:
-#     listeners = PLAINTEXT://your.host.name:9092
-#listeners=PLAINTEXT://:9092
-
-# Listener name, hostname and port the broker will advertise to clients.
-# If not set, it uses the value for "listeners".
-#advertised.listeners=PLAINTEXT://your.host.name:9092
+echo "listeners=$KAFKA_LISTENERS" >> /opt/kafka/config/server.properties
+echo "advertised.listeners=$KAFKA_ADVERTISED_LISTENERS" >> /opt/kafka/config/server.properties
 
 # Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
 #listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
@@ -27,14 +15,9 @@ echo "socket.request.max.bytes=$KAFKA_SOCKET_REQUEST_MAX_BYTES" >> /opt/kafka/co
 echo "num.partitions=$KAFKA_NUM_PARTITIONS" >> /opt/kafka/config/server.properties
 echo "num.recovery.threads.per.data.dir=$KAFKA_NUM_RECOVERY_THREADS_PER_DATA_DIR" >> /opt/kafka/config/server.properties
 
-############################# Internal Topic Settings  #############################
-# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"
-# For anything other than development testing, a value greater than 1 is recommended to ensure availability such as 3.
 echo "offsets.topic.replication.factor=$KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR" >> /opt/kafka/config/server.properties
 echo "transaction.state.log.replication.factor=$KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR" >> /opt/kafka/config/server.properties
 echo "transaction.state.log.min.isr=$KAFKA_TRANSACTION_STATE_LOG_MIN_ISR" >> /opt/kafka/config/server.properties
-
-############################# Log Flush Policy #############################
 
 # Messages are immediately written to the filesystem but by default we only fsync() to sync
 # the OS cache lazily. The following configurations control the flush of data to disk.
