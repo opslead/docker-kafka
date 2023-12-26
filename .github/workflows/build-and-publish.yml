@@ -1,10 +1,8 @@
 name: Build and Publish
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
-  pull_request:
 
 env:
   KAFKA_VERSION: 3.6.1
@@ -38,7 +36,7 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/kafka:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/kafka:${{ env.KAFKA_VERSION }}
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
 
       - name: Update repo description
         uses: peter-evans/dockerhub-description@v3

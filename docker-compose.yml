@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  zookeeper:
+    image: opslead/zookeeper:latest
+    # ports:
+    #   - 2181:2181
+  kafka:
+    image: opslead/kafka:latest
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
